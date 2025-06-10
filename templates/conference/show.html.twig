@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference Details{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>{{ conference }}</h1>
+    <p><strong>City:</strong> {{ conference.city }}</p>
+    <p><strong>Year:</strong> {{ conference.year }}</p>
+    <p><strong>International:</strong> {{ conference.isInternational ? 'Yes' : 'No' }}</p>
+
+    <h2>Comments</h2>
+    {% if comments|length > 0 %}
+        <div>There are {{ comments|length }} comments.</div>
+
+         {% for comment in comments %}
+             {# {% if comment.photofilename %}
+                 <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-width: 200px" />
+             {% endif %} #}
+             <p>{{ comment.text }}</p>
+         {% endfor %}
+
+        {% if hasPrevious %}
+            <a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Previous</a>
+        {% endif %}
+        <br>
+        {% if hasNext %}
+            <a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Next</a>
+        {% endif %}
+     {% else %}
+         <div>No comments have been posted yet for this conference.</div>
+     {% endif %}
+</div>
+{% endblock %}
