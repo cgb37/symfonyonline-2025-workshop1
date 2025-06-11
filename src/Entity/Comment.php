@@ -79,8 +79,9 @@ class Comment
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->createdAt = new \DateTimeImmutable($createdAt->format('Y-m-d H:i:s'));
+        $this->createdAt = $createdAt;
 
+        return $this;
     }
 
     public function getConference(): ?Conference
@@ -93,5 +94,11 @@ class Comment
         $this->conference = $conference;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }
